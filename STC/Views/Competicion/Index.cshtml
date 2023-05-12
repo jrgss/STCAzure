@@ -1,0 +1,33 @@
+﻿@model List<Partido>
+@{
+    List<VistaEquiposCompeticion> equipos = ViewData["EQUIPOSPARTCOMP"] as List<VistaEquiposCompeticion>;
+}
+   @foreach(Partido partido in Model){
+
+       <h2> Local: @partido.IdLocal - @partido.IdVisitante Visitante</h2>
+   }
+
+   <h3>Ver más partidos</h3>
+
+ <h1>Clasificación</h1>
+ <table>
+ <thead>
+    <tr>
+        <th>Equipo</th>
+        <th>PJ</th>
+        <th>PUNTOS</th>
+        <th>GF</th>
+        <th>GC</th>
+    </tr>
+ </thead>
+ <tbody>
+        @foreach(VistaEquiposCompeticion equipo in equipos)
+        {
+            <tr>@equipo.Nombre</tr>
+            <tr>@equipo.PartidosJugados</tr>
+            <tr>@equipo.Puntos</tr>
+            <tr>@equipo.GolesMarcados</tr>
+            <tr>@equipo.GolesEncajados</tr>
+        }
+    </tbody>
+ </table>

@@ -1,0 +1,125 @@
+.container_partidos {
+    border: 1px solid black;
+    margin: 1rem;
+    /* padding: 1rem 1rem; */
+    text-align: center;
+    display: flex;
+    /*width: 100%;*/
+   
+}
+
+.container_partidos_medio {
+    display: inline-block;
+    border: 1px solid blue;
+    /* margin: 0.5em; */
+    /* padding: 1rem 1rem; */
+    vertical-align: middle;
+    text-align: center;
+    flex: 1; /*height:100% */
+    /*width:50%;*/ /*Esto antes hacia falta para que los dos divs llenasen a lo ancho    */
+}
+
+.row {
+    display: flex;
+}
+
+.column {
+    flex: 33.33%;
+    /* border: 1px solid red;  */
+    /* padding: 5px; */
+}
+
+
+.imagenUltimoPartido {
+    width: 25%;
+}
+.imagenProximos {
+    width:13%;
+}
+
+.titulosInfo {
+    margin-top: 2%;
+    font-size: 2em;
+}
+.din{
+    color:red;
+}
+@media ( max-width:1024px) {
+    .imagenProximos {
+        width: 40%;
+    }
+    .imagenUltimoPartido {
+        width: 65%;
+        margin-top: 25%;
+    }
+    .titulosInfo {
+        margin-top: 5%;
+        font-size: 1.2em;
+    }
+
+    .detallesPartido div h3 {
+        font-size: 0.9em;
+    }
+    .detallesPartido div h5 {
+        font-size: 0.7em;
+    }
+    .proximoTercerPartido {
+        display: none;
+    }
+    .segundoSalto {
+        display: none;
+    }
+    .column {
+        flex: 42%;
+    }
+    .guion {
+       content:"aadw";
+    }
+ /*   .proximoSegundoPartido {
+        display: none;
+    }*/
+}
+.guion {
+    display: flex;
+    flex: 5%;
+    /* border: 1px solid green;  */
+    justify-content: center;
+    /* align-content: center; */
+    flex-direction: column;
+}
+
+.rowPrincipal {
+    display: flex;
+    /*margin-top: 20%;*/
+    /* border: 1px solid red;  */
+}
+
+.columnaPrincipal {
+    flex: 33.33%;
+    /* border: 1px solid red;  */
+    /* padding: 5px; */
+}
+
+
+.guionPrincipal {
+    display: flex;
+    flex: 5%;
+    /* border: 1px solid green;  */
+    justify-content: center;
+    /* align-content: center; */
+    flex-direction: column;
+}
+
+.compsInfo{
+    width:10%;
+}
+/*3 lineas 3en defensa jugador 1 */
+.span-jugador-3-1-3-1{
+
+}
+/*3 lineas 3en defensa jugador 1 */
+.span-jugador-3-1-3-2 {
+}
+/*3 lineas 3en defensa jugador 1 */
+.span-jugador-3-1-3-3 {
+}

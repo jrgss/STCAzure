@@ -1,0 +1,66 @@
+﻿@model ModelCompeticionStandings
+
+<div>
+    <table class="wg-table">
+        <thead>
+
+        </thead>
+        <tbody>
+            <tr>
+                <td class="wg_header" colspan="11">
+                    <img class="wg_flag" src="@Model.competicion.Logo" /> @Model.competicion.Pais: @Model.competicion.Nombre
+                </td>
+            </tr>
+            <tr>
+                <td class="wg_header" colspan="2"></td>
+                <td class="wg_header wg_text_center wg_tooltip wg_tooltip_left">MP</td>
+                <td class="wg_header wg_text_center wg_tooltip wg_tooltip_left">W</td>
+                <td class="wg_header wg_text_center wg_tooltip wg_tooltip_left">D</td>
+                <td class="wg_header wg_text_center wg_tooltip wg_tooltip_left">L</td>
+                <td class="wg_header wg_text_center wg_tooltip wg_tooltip_left wg_hide_xxs">G</td>
+                <td class="wg_header wg_text_center wg_hide_xs">+/-</td>
+                <td class="wg_header wg_text_center wg_tooltip wg_tooltip_left">P</td>
+                <td class="wg_header wg_text_center wg_hide_xs"></td>
+                  <td class="wg_header wg_text_center wg_hide_xs"></td>
+            </tr>
+            @foreach(EquipoCompStats equipo in Model.equipoCompStats)
+            {
+                <tr>
+                    <td class="wg_text_center wg_bolder wg_width_20">@equipo.Posicion</td>
+                    <td class="wg_nowrap">
+                        <img class="wg_logo" src="~/images/@equipo.logo"> @equipo.Nombre
+                    </td>
+                    <td class="wg_text_center wg_width_20">@equipo.PartidosJugados</td>
+                    <td class="wg_text_center wg_width_20">@equipo.Victorias</td>
+                    <td class="wg_text_center wg_width_20">@equipo.Empates</td>
+                    <td class="wg_text_center wg_width_20">@equipo.Derrotas</td>
+                    <td class="wg_text_center wg_width_20 wg_hide_xxs">@equipo.GolesMarcados:@equipo.GolesEncajados</td>
+                    <td class="wg_text_center wg_width_20 wg_hide_xs">@{var diferencia=equipo.GolesMarcados-equipo.GolesEncajados;}@diferencia</td>
+                    <td class="wg_text_center wg_width_20">@equipo.Puntos</td>
+                    <td class="wg_text_center wg_width_90 wg_hide_xs"></td>
+                    <td class="wg_text_center wg_width_20 wg_hide_xs"></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+@*
+
+<div id="wg-api-football-standings"
+    data-host="v3.football.api-sports.io"
+     data-key="9dbcd3b27b1169a084ab6a480be5af6d"
+    data-league="39"
+    data-team=""
+    data-season="2021"
+    data-theme=""
+    data-show-errors="false"
+    data-show-logos="true"
+    class="wg_loader">
+</div>
+<script
+    type="module"
+    src="https://widgets.api-sports.io/2.0.3/widgets.js">
+</script>*@

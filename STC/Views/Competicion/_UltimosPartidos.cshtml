@@ -1,0 +1,65 @@
+﻿@model ModelCompeticionPartidos
+@{
+    int numregistros = 1;
+    int numeropagina = 1;
+    Partido partidoprincipal = ViewData["PARTIDO"] as Partido;
+    if (ViewData["REGISTROS"] != null)
+    {
+        numregistros = (int)ViewData["REGISTROS"];
+        numeropagina = (int)ViewData["POSICION"];
+    }
+    }
+
+
+<h1 style="text-align:center;" class="fuente">Últimos Partidos</h1>
+    <br />
+<ul class="list-group list-group-horizontal" style="    list-style-type: none;">
+ 
+             <li>
+        <button class="list-group-item list-group-item-dark" onclick='cambiarPaginacion((@numeropagina-5),@numregistros)'> < </button>
+    </li>
+             <li>
+        <button class="list-group-item list-group-item-dark" onclick='cambiarPaginacion(@numeropagina+5,@numregistros)'> > </button>
+    </li>
+           
+
+         </ul>
+<table class="wg-table">
+    <thead>
+    </thead>
+    <tbody>
+        @foreach (Partido partido in Model.partidos)
+        {
+            <tr>
+                <td class="wg_tooltip wg_width_30 wg_text_center wg_finished">
+                    FT
+                </td>
+                <td>
+                    <img class="wg_logo" src="~/images/@partido.LogoLocal">
+                    <span class=" undefined wg_nowrap">@partido.NombreLocal</span>
+                    <br>
+                    <img class="wg_logo" src="~/images/@partido.LogoVisitante">
+                    <span class=" undefined wg_nowrap">@partido.NombreVisitante</span>
+                </td>
+                <td class="wg_width_20 wg_text_center wg_bolder undefined">
+                    @partido.GolesLocalFt
+                    <br>
+                    @partido.GolesVisitanteFt
+                </td>
+                <td class=" wg_width_20 wg_bolder_300 wg_text_center  undefined">
+                    (@partido.GolesLocalHf)
+                    <br>
+                    (@partido.GolesVisitanteHf)
+                </td>
+                <td class="wg_width_20 wg_text_center">
+                    <span>@partido.FechaInicio</span>
+                    <span class="wg_info wg_tooltip wg_tooltip_left wg_load_game detalles" onclick='abrirDetalles(@partido.IdPartido)'>!</span>
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+  

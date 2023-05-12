@@ -1,0 +1,187 @@
+﻿@using Newtonsoft.Json;
+@using STC.Helpers;
+@model List<ModelCompeticionPartidos>
+@{
+    DateTime hoy = DateTime.Today;
+    string fechaHoy = hoy.Year + "-" + hoy.Month + "-" + hoy.Day;
+    int cntPartidos = 0;
+}
+
+    @section Scripts{
+        <script type="text/javascript">
+
+            function abrirDetalles(idpartido){
+
+            $('#MiPopUp').modal('show'); $('#MiPopUp').load("/Home/_PartidoDetalles?idpartido=" + idpartido);
+            }
+            
+            function cerrarModal(){
+                    $('#MiPopUp').html("");$('#MiPopUp').modal('hide');
+            
+            }
+        </script>
+
+    }
+    @*data-url='@Url.Action("_PruebaPartial","Home")'*@
+
+
+<div class="modal fade" data-bs-keyboard="false" data-bs-backdrop="static" id="MiPopUp" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="wg_toolbar">
+      <span class="wg_button_toggle"></span>
+        <span></span>
+        <span class="wg-dropdown">
+            <span class="wg-dropbtn">@ViewData["FECHA"]</span>
+            <div class="wg-dropdown-content">
+            
+            @for(int i = 13; i >0; i--)
+            {
+                DateTime diaA = hoy.AddDays(-i);
+                string fechaA = diaA.Year + "-" + diaA.Month + "-" + diaA.Day;
+                <a asp-controller="Home" asp-action="Index" asp-route-fecha="@fechaA" class="wg-date">@fechaA</a>
+            }
+            <a asp-controller="Home" asp-action="Index" asp-route-fecha="@fechaHoy" class="wg-date">Hoy</a>
+            @for (int i = 1; i < 8; i++)
+            {
+                DateTime diaS = hoy.AddDays(i);
+                string fechaS = diaS.Year + "-" + diaS.Month + "-" + diaS.Day;
+                <a asp-controller="Home" asp-action="Index" asp-route-fecha="@fechaS" class="wg-date">@fechaS</a>
+            }
+   
+                     
+               
+            </div>
+        </span>
+    </div>
+    <div>
+
+<table class="wg-table">
+    <thead>
+    </thead>
+    <tbody>
+        
+     @foreach(ModelCompeticionPartidos mimodel in Model){
+                //si hay partidos de una competición un día los dibujo
+                @if (mimodel.partidos.Count > 0)
+                {
+                    cntPartidos++;
+               
+                <tr class=" football-league-568 date-regular-season---10 football-games-select">
+                <td class="wg_header" colspan="8">
+                            <a asp-controller="Competicion" asp-action="Competicion" asp-route-idcomp="@mimodel.competicion.IdCompeticion" asp-route-season="2022" style=" text-decoration: none">
+                     <img class="wg_logo" src="@mimodel.competicion.Logo">
+                                <span class="fuente">@mimodel.competicion.Nombre</span>
+                    </a>
+                    </td>    
+                    
+                   
+                      </tr>
+            @foreach (Partido partido in mimodel.partidos)
+                {
+                        string a;
+                    <tr>
+                        <td data-text="@partido.Estado" class="wg_tooltip wg_width_30 wg_text_center wg_finished">
+                                @if (partido.Estado.Equals("Match Finished"))
+                                {
+                                    a = partido.EstadoFinal;
+                                }else
+                                    {
+                                        a = partido.FechaInicio.Hour+":";
+                                        //si el partido es a una hora en punto(ej: 16:00) el metodo minuto devuelve solo un 0 así que compruebo si necesita un 0 mas o no
+                                    if (partido.FechaInicio.Minute == 0)
+                                    {
+                                        a += +partido.FechaInicio.Minute + "0";
+                                    }
+                                    else
+                                    {
+                                        a += partido.FechaInicio.Minute;
+                                    }
+                                }
+                                    @a
+                                </td>
+                           <td>
+                    <img class="wg_logo" src="@partido.LogoLocal">
+                        <span class=" undefined wg_nowrap">@partido.NombreLocal</span>
+                    <br>
+                     <img class="wg_logo" src="@partido.LogoVisitante">
+                    <span class=" undefined wg_nowrap">@partido.NombreVisitante</span> 
+                    </td>
+                    <td class="wg_width_20 wg_text_center wg_bolder undefined">
+                        @partido.GolesLocalFt
+                        <br>
+                        @partido.GolesVisitanteFt
+                    </td>
+                    <td class=" wg_width_20 wg_bolder_300 wg_text_center undefined">
+                        (@partido.GolesLocalHf)
+                        <br>
+                        (@partido.GolesVisitanteHf)
+                    </td>
+                    <td class="wg_width_20 wg_text_center">
+                        @*<span>@partido.FechaInicio</span>*@
+                        <span class="wg_info  wg_tooltip wg_tooltip_left wg_load_game detalles" data-text="Ver Detalles" onclick='abrirDetalles(@partido.IdPartido)'>!</span>
+                    </td>
+          
+              </tr>
+                }
+                                 
+                  }
+            }
+    </tbody>
+</table>
+    @if (cntPartidos == 0)
+    {
+        <h1 style="text-align:center;"class="fuente">No hay partidos este día, seleccione otro día o seleccione una competición</h1>
+    }
+</div>
+
+
+@*
+<div id="wg-api-football-games"
+     data-host="v3.football.api-sports.io"
+     data-key="9dbcd3b27b1169a084ab6a480be5af6d"
+     data-date=""
+     data-league="39"
+     data-season="2022"
+     data-theme=""
+     data-refresh="15"
+     data-show-toolbar="true"
+     data-show-errors="false"
+     data-show-logos="true"
+     data-modal-game="true"
+     data-modal-standings="true"
+     data-modal-show-logos="true">
+</div>
+<script type="module"
+        src="https://widgets.api-sports.io/2.0.3/widgets.js">
+</script>*@
+
+
+
+@*   <div id="wg-api-football-games"
+     data-host="v3.football.api-sports.io"
+     data-key="9dbcd3b27b1169a084ab6a480be5af6d"
+     data-date="2022-08-20"
+     data-league="39"
+     data-season="2022"
+     data-theme=""
+     data-refresh="15"
+     data-show-toolbar="true"
+     data-show-errors="false"
+     data-show-logos="true"
+     data-modal-game="true"
+     data-modal-standings="true"
+     data-modal-show-logos="true">
+</div>
+<script type="module"
+        src="https://widgets.api-sports.io/2.0.3/widgets.js">
+</script>
+
+*@

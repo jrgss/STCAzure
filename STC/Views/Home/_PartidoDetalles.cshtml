@@ -1,0 +1,666 @@
+﻿@model ModelPartidoCompleto
+@{
+    VenueB venue = ViewData["VENUE"] as VenueB;
+    string estadio = venue.Nombre;
+    string ciudad = venue.Ciudad;
+    int cnt = 1;
+    int cntReal = 1;
+
+    string esquemaLocal="";
+    string[] lineasLocal = { "" };
+    int totalLineasLocal=0;
+
+    string esquemaVisitante="";
+    string[] lineasVisitante= { ""} ;
+    int totalLineasVistante=0;
+    if (Model.partido.Estado.Equals("Match Finished"))
+    {
+         esquemaLocal = Model.LineUps[0].Lineup.Esquema;
+         lineasLocal = esquemaLocal.Split("-");
+        totalLineasLocal = lineasLocal.Count();
+
+        esquemaVisitante = Model.LineUps[1].Lineup.Esquema;
+         lineasVisitante = esquemaVisitante.Split("-");
+         totalLineasVistante = lineasVisitante.Count();
+
+        foreach (Evento evento in Model.eventos)
+        {
+            if (evento.Elapsed > 45)
+            {
+                cntReal = evento.IdEvento;
+                break;
+            }
+        }
+    }
+   
+}
+
+           <script type="text/javascript">
+
+            $(document).ready(function () {
+                $("span.jugador").each(function (index) {
+            var totallineas = $(this).data("totallineas"); 
+            var linea = $(this).data("linea"); 
+            var lado=$(this).data("lado");
+            var totalcolumna = $(this).data("totalcolumnas");
+            var columna = $(this).data("columna");
+              
+            var estiloCalculado = calcularEstilo(totallineas, linea, lado, totalcolumna,columna);
+                    // Aplicar el estilo calculado 
+                    $(this).css(estiloCalculado);
+                });
+            });
+
+    function calcularEstilo(totallineas, linea,lado,totalcolumna,columna) {
+     
+            var distancialado;
+            var distanciavertical;
+                if(totallineas==3){
+                    if(linea==1){
+                        distancialado="0px";
+                    }else if(linea==2){
+                distancialado = "125px"; //original "70.25px"
+                    }else if(linea==3){
+                    distancialado = "225px";//original 140px
+                    }else if(linea==4){
+                     distancialado = "320px";//original 209px
+                    }
+                }else if(totallineas==4){
+                     if(linea==1){
+                        distancialado="0px";
+                    }else if(linea==2){
+                        distancialado = "125px";//original 55.75
+                    }else if(linea==3){
+                    distancialado = "185px";//original 111.5px
+                    }else if(linea==4){
+                distancialado = "250px";//original 167.25px
+                    }else if(linea==5){
+                distancialado = "320px";//original 223px
+                    }
+                }
+
+                if(totalcolumna==1){
+                    distanciavertical="50%";
+                }else if(totalcolumna==2){
+            if (columna == 1) {
+                        distanciavertical="33%";
+                    }else if(columna==2){
+                        distanciavertical="66%";
+                    }
+                }else if(totalcolumna==3){
+                     if(columna==1){
+                        distanciavertical="25%";
+                    }else if(columna==2){
+                        distanciavertical="50%";
+                    }else if(columna==3){
+                        distanciavertical = "75%";
+                    }
+                }else if(totalcolumna==4){
+                    if (columna == 1) {
+                        distanciavertical = "20%";
+                    } else if (columna == 2) {
+                        distanciavertical = "40%";
+                    } else if (columna == 3) {
+                        distanciavertical = "60%";
+                    } else if (columna ==4){
+                        distanciavertical = "80%";
+                    }
+                }else if(totalcolumna==5){
+                      if (columna == 1) {
+                        distanciavertical = "16.67%";
+                    } else if (columna == 2) {
+                        distanciavertical = "33.34%";
+                    } else if (columna == 3) {
+                        distanciavertical = "50%";
+                    } else if (columna ==4){
+                        distanciavertical = "66.68%";
+                    } else if(columna==5){
+                        distanciavertical = "83.35%";
+                    }
+               }
+
+                // Lógica para calcular el estilo en función de los valores de los atributos data
+                var estiloCalculado = {};
+                // Asignar valores de estilo en función de los valores de atributos data
+                if(lado==1){
+                    estiloCalculado.left = distancialado;
+                }else{
+                    estiloCalculado.right = distancialado;
+                }
+                if (lado == 1) {
+                    estiloCalculado.top = distanciavertical;
+                } else {
+                    estiloCalculado.bottom = distanciavertical
+                }
+                
+            
+                return estiloCalculado;
+            }
+
+               function clickEvento(){
+        var tablaStats = document.getElementById("tablastats");
+        var spanEvento = document.getElementById("spanEventos");
+        var tablaEventos = document.getElementById("tablaEventos");
+        var spanStats= document.getElementById("spanStats");
+        var spanLineup = document.getElementById("spanLineup");
+        var tablaLineup = document.getElementById("tablaLineup");
+        tablaStats.classList.add("wg_hide");
+        tablaEventos.classList.remove("wg_hide");
+        tablaLineup.classList.add("wg_hide");
+        spanEvento.classList.add("wg_active");
+        spanStats.classList.remove("wg_active");
+        spanLineup.classList.remove("wg_active");
+               }
+
+    function clickStats() {
+
+        var tablaStats = document.getElementById("tablastats");
+        var spanEventos = document.getElementById("spanEventos");
+        var tablaEventos = document.getElementById("tablaEventos");
+        var spanStats= document.getElementById("spanStats");
+        var spanLineup = document.getElementById("spanLineup");
+        var tablaLineup = document.getElementById("tablaLineup");
+     
+            tablaStats.classList.remove("wg_hide");
+            tablaEventos.classList.add("wg_hide");
+        tablaLineup.classList.add("wg_hide");
+            spanStats.classList.add("wg_active");        
+            spanEventos.classList.remove("wg_active");
+        spanLineup.classList.remove("wg_active");
+       // alert("PRUEBA");
+       //var a = $("#tablastats").lentgth;
+       //alert("HGOLA "+ a)
+    }
+    function clickAlineaciones(){
+        var tablaStats = document.getElementById("tablastats");
+        var spanEventos = document.getElementById("spanEventos");
+        var tablaEventos = document.getElementById("tablaEventos");
+        var spanStats = document.getElementById("spanStats");
+        var spanLineup = document.getElementById("spanLineup");
+        var tablaLineup = document.getElementById("tablaLineup");
+
+        tablaStats.classList.add("wg_hide");
+        tablaEventos.classList.add("wg_hide");
+        tablaLineup.classList.remove("wg_hide");
+        spanStats.classList.remove("wg_active");
+        spanEventos.classList.remove("wg_active");
+        spanLineup.classList.add("wg_active");
+        
+    }
+
+    function sacarDistanciaLado(){
+        alert("1");
+        var element= $(this);
+        element.style.left="50px";
+        alert("2");
+    }
+           </script>
+
+
+<div class="wg_modal_content">
+    <span class="wg_modal_close" onclick="cerrarModal()">X</span>
+    @if(Model.partido.Estado.Equals("Match Finished"))
+    {
+        <div>
+            <table id="tableEventos" class="wg-table">
+                <tbody>
+                    <tr>
+                        <td class="wg_header" colspan="2">
+
+                            <img class="wg_flag" src="@Model.partido.PaisImagen" /> @Model.partido.Pais : @Model.partido.NombreCompeticion
+                        </td>
+                        <td class="wg_header wg_text_right">@Model.partido.Ronda</td>
+                    </tr>
+                    <tr>
+                        <td class="wg_text_center wg_width_33_p wg_no_border">
+                            <br />
+                            <br />
+                            <div class="wb_img_block">
+                                <img class="wg_logo_game" src="~/images/@Model.partido.LogoLocal" />
+                            </div>
+                        </td>
+                        <td class="wg_text_center wg_width_33_p wg_no_border">
+                            <br />
+                            @Model.partido.FechaInicio
+                            <br />
+                            <br />
+                            <span class="wg_modal_score undefined">@Model.partido.GolesLocalFt - @Model.partido.GolesVisitanteFt</span>
+                        </td>
+                        <td class="wg_text_center wg_width_33_p wg_no_border">
+                            <br />
+                            <br />
+                            <div class="wb_img_block">
+                                <img class="wg_logo_game" src="~/images/@Model.partido.LogoVisitante" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="wg_text_center  wg_no_border wg_modal_team">
+                            @Model.partido.NombreLocal
+                        </td>
+                        <td></td>
+                        <td class="wg_text_center undefined wg_no_border wg_modal_team">
+                            @Model.partido.NombreVisitante
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="wg_text_center wg_no_border" colspan="3">
+                            <br />
+                            @estadio
+                            <b>@ciudad</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="wg_text_center wg_no_border" colspan="3">
+                            <i class="icon-svg icon-whistle"> </i>
+                                @Model.partido.Arbitro
+                           
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="wg_header" colspan="3">
+                            <span id="spanEventos" onclick="clickEvento()" class="wg_button_toggle_game wg_active undefined">Eventos</span>
+                            <span id="spanStats" onclick="clickStats()" class="wg_button_toggle_game undefined">Estadísticas</span>
+                            <span id="spanLineup" onclick="clickAlineaciones()" class="wg_button_toggle_game undefined">Alineaciones</span>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <table id="tablaEventos" class="wg-table wg_data_toggle_game">
+                <tbody>
+                    <tr>
+                        <td class="wg_header wg_text_center">Primera Mitad @Model.partido.GolesLocalHf - @Model.partido.GolesVisitanteHf</td>
+                    </tr>
+                    @foreach (Evento evento in Model.eventos)
+                    {
+                        @if (evento.IdEvento == cntReal)
+                        {
+                            <tr>
+                                <td class="wg_header wg_text_center">Segunda Mitad @{
+                                        var gh2 = Model.partido.GolesLocalFt - Model.partido.GolesLocalHf;
+                                    }@gh2 - @{
+                                        var gv2 = Model.partido.GolesVisitanteFt - Model.partido.GolesVisitanteHf;
+                                    }@gv2 </td>
+                            </tr>
+                        }
+                        <tr>
+
+                            @if (evento.IdEquipo == Model.partido.IdLocal)
+                            {
+                                <td>
+                                    <span class="wg_p_lr_2 wg_tooltip" data-text="@evento.Detalles">
+                                        @evento.Elapsed
+                                        @if (evento.Extra != 0)
+                                        {
+                                            <span>+ @evento.Extra</span>
+                                        }
+                                        @if (evento.Tipo.Equals("Goal"))
+                                        {
+                                            @if (evento.Detalles.Equals("Normal Goal"))
+                                            {
+                                                <i class="icon-svg icon-soccer-ball"></i>
+                                            }
+                                            else if (evento.Detalles.Equals("Penalty"))
+                                            {
+                                                <i class="icon-svg icon-soccer-ball-penalty"></i>
+                                            }
+                                            else if (evento.Detalles.Equals("Own Goal"))
+                                            {
+                                                <i class="icon-svg icon-soccer-ball-own-goal"></i>
+                                            }
+                                        }
+                                        else if (evento.Tipo.Equals("Card"))
+                                        {
+                                            @if (evento.Detalles.Equals("Red Card"))
+                                            {
+                                                <i class="icon-svg icon-red-card"></i>
+                                            }
+                                            else if (evento.Detalles.Equals("Yellow Card"))
+                                            {
+                                                <i class="icon-svg icon-yellow-card"></i>
+                                            }
+                                        }
+                                        else if (evento.Tipo.Equals("subst"))
+                                        {
+                                            <i class="icon-svg icon-substitution"></i>
+                                        }else if (evento.Tipo.Equals("Var"))
+                                        {
+                                            <i class="icon-svg icon-whistle"></i>
+                                        }
+                                        <span class="wg_p_lr_2 wg_bolder">   @evento.NombreJugador </span>
+                                        <span class="wg_p_lr_2"> @evento.NombreAsistencia</span>
+                                    </span>
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="wg_text_right">
+                                    <span class="wg_p_lr_2 wg_tooltip wg_tooltip_left" data-text="@evento.Detalles">
+                                        <span class="wg_p_lr_2"> @evento.NombreAsistencia</span>
+                                        <span class="wg_p_lr_2 wg_bolder">@evento.NombreJugador </span>
+                                        @if (evento.Tipo.Equals("Goal"))
+                                        {
+                                            @if (evento.Detalles.Equals("Normal Goal"))
+                                            {
+                                                <i class="icon-svg icon-soccer-ball"></i>
+                                            }
+                                            else if (evento.Detalles.Equals("Penalty"))
+                                            {
+                                                <i class="icon-svg icon-soccer-ball-penalty"></i>
+                                            }
+                                            else if (evento.Detalles.Equals("Own Goal"))
+                                            {
+                                                <i class="icon-svg icon-soccer-ball-own-goal"></i>
+                                            }
+                                        }
+                                        else if (evento.Tipo.Equals("Card"))
+                                        {
+                                            @if (evento.Detalles.Equals("Red Card"))
+                                            {
+                                                <i class="icon-svg icon-red-card"></i>
+                                            }
+                                            else if (evento.Detalles.Equals("Yellow Card"))
+                                            {
+                                                <i class="icon-svg icon-yellow-card"></i>
+                                            }
+                                        }
+                                        else if (evento.Tipo.Equals("subst"))
+                                        {
+                                            <i class="icon-svg icon-substitution"></i>
+                                        }
+                                        else if (evento.Tipo.Equals("Var"))
+                                        {
+                                            <i class="icon-svg icon-whistle"></i>
+                                        }
+                                        @evento.Elapsed
+                                        @if (evento.Extra != 0)
+                                        {
+                                            <span>+ @evento.Extra</span>
+                                        }
+                                    </span>
+
+
+                                </td>
+                            }
+
+
+
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+            <table id="tablastats" class="wg-table wg_data_toggle_game wg_hide">
+                <tbody>
+
+                    @for (int i = 0; i < Model.EstadisticasPartido.statsLocal.Count - 1; i++)
+                    {
+
+                        <tr>
+                            <td class="wg_width_33_p wg_p_lr_5 wg_no_border">@Model.EstadisticasPartido.statsLocal[i].Valor</td>
+                            <td colspan="2" class="wg_width_34_p wg_no_border wg_text_center wg_bolder">@Model.EstadisticasPartido.statsLocal[i].Tipo</td>
+                            <td class="wg_width_33_p wg_p_lr_5 wg_no_border wg_text_right">@Model.EstadisticasPartido.statsVisitante[i].Valor</td>
+                        </tr>
+                        var a = Model.EstadisticasPartido.statsLocal[i].Valor.Substring(Model.EstadisticasPartido.statsLocal[i].Valor.Length - 1);
+                        double local;
+                        double visitante;
+                        double total;
+                        string porcentajelocal;
+                        string porcentajevisitante;
+                        if (a.Equals("%"))
+                        {
+                            var valorlocalsinporcentaje = Model.EstadisticasPartido.statsLocal[i].Valor.Substring(0, Model.EstadisticasPartido.statsLocal[i].Valor.Length - 1);
+                            var valorvisitantesinporcentaje = Model.EstadisticasPartido.statsVisitante[i].Valor.Substring(0, Model.EstadisticasPartido.statsVisitante[i].Valor.Length - 1);
+                            porcentajelocal = (valorlocalsinporcentaje).Replace(",", ".");
+                            porcentajevisitante = (valorvisitantesinporcentaje).Replace(",", ".");
+                            local = double.Parse(porcentajelocal);
+                            visitante = double.Parse(porcentajevisitante);
+                        }
+                        else
+                        {
+
+                            local = double.Parse(@Model.EstadisticasPartido.statsLocal[i].Valor);
+                            visitante = double.Parse(@Model.EstadisticasPartido.statsVisitante[i].Valor);
+                            total = local + visitante;
+                            if (local == 0)
+                            {
+                                 porcentajelocal = "0";
+                            }
+                            else
+                            {
+                                 porcentajelocal = (local * 100 / total).ToString().Replace(",", ".");
+                            }
+                            if (visitante == 0)
+                            {
+                                porcentajevisitante = "0";
+                            }
+                            else
+                            {
+                                 porcentajevisitante = (visitante * 100 / total).ToString().Replace(",", ".");
+                            }
+                           
+                        }
+
+
+
+                        <tr>
+                            <td colspan="2" class="wg_no_border wg_width_50_p">
+                                <div class="wg_progress_bar wg_progress_bar_home">
+                                    @if (local > visitante)
+                                    {
+                                        <div class="wg_progress_bar_green" style="width:@porcentajelocal%"></div>
+                                    }
+                                    else
+                                    {
+                                        <div class="wg_progress_bar_red" style="width:@porcentajelocal%"></div>
+                                    }
+
+                                </div>
+                            </td>
+                            <td colspan="2" class="wg_no_border wg_width_50_p">
+                                <div class="wg_progress_bar ">
+                                    @if (local > visitante)
+                                    {
+                                        <div class="wg_progress_bar_red" style="width:@porcentajevisitante%">
+                                        </div>
+                                    }
+                                    else
+                                    {
+
+
+                                        <div class="wg_progress_bar_green" style="width:@porcentajevisitante%"></div>
+                                    }
+
+                                </div>
+                            </td>
+
+
+                        </tr>
+                    }
+
+
+
+                </tbody>
+            </table>
+
+            <table id="tablaLineup" class="wg-table wg_data_toggle_game wg_hide">
+                <tbody>
+                    <tr>
+                        <td class="wg_grid" height="362.375px" colspan="2">
+                            @foreach (LineupPlayer player in Model.LineUps[0].Titulares)
+                            {
+                                @if (!player.Posicion.Equals("G"))
+                                {
+                                    int a = (int.Parse(player.Grid.Substring(0, 1)));
+                                    int miTotalColumnas = int.Parse(lineasLocal[a - 2]);
+                                    <span class="wg_absolute wg_text_center jugador" data-totallineas="@totalLineasLocal" data-linea="@{
+                                                                int miLinea=int.Parse(@player.Grid.Substring(0, 1));
+                                    }@miLinea" data-lado="1" data-totalcolumnas="@miTotalColumnas" data-columna="@{
+                                                                int columna=int.Parse(player.Grid.Substring(2,1));
+                                    }@columna">
+                                        <span class="wg_grid_player wg_tooltip" data-text="@player.Nombre" style="background:#fcfcfc; border: 2px solid red"></span>
+                                    </span>
+                                }
+
+                                else
+                                {
+                                    <span class="wg_absolute wg_text_center jugador" style="top:50%;left:0px">
+                                        <span class="wg_grid_player wg_tooltip" data-text="@player.Nombre" style="background:#fcfcfc; border: 2px solid red"></span>
+                                    </span>
+                                }
+                            }
+
+                            @foreach (LineupPlayer player in Model.LineUps[1].Titulares)
+                            {
+                                @if (!player.Posicion.Equals("G"))
+                                {
+                                    int a = (int.Parse(player.Grid.Substring(0, 1)));
+                                    int miTotalColumnas = int.Parse(lineasVisitante[a - 2]);
+                                    <span class="wg_absolute wg_text_center jugador" data-totallineas="@totalLineasVistante" data-linea="@{
+                                                                int miLinea=int.Parse(@player.Grid.Substring(0, 1));
+                                    }@miLinea" data-lado="2" data-totalcolumnas="@miTotalColumnas" data-columna="@{
+                                                                int columna=int.Parse(player.Grid.Substring(2,1));
+                                    }@columna">
+                                        <span class="wg_grid_player wg_tooltip" data-text="@player.Nombre" style="background:blue; border: 2px solid #fcfcfc;transform: translateY(50%)translateX(-75%);"></span>
+                                    </span>
+                                }
+
+                                else
+                                {
+                                    <span class="wg_absolute wg_text_center jugador" style="bottom:50%;right:0px">
+                                        <span class="wg_grid_player wg_tooltip" data-text="@player.Nombre" style="background:blue; border: 2px solid #fcfcfc;transform: translateY(50%)translateX(-75%);"></span>
+                                    </span>
+                                }
+                            }
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="wg_text_center wg_header" colspan="2">FORMATIONS</td>
+                    </tr>
+                    <tr>
+                        <td class="wg_text_center">@Model.LineUps[0].Lineup.Esquema</td>
+                        <td class="wg_text_center">@Model.LineUps[1].Lineup.Esquema</td>
+                    </tr>
+                    <tr>
+                        <td class="wg_text_center wg_header" colspan="2">TITULARES</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @foreach (LineupPlayer player in Model.LineUps[0].Titulares)
+                            {
+                                <div>
+                                    <span class="wg_bolder">@player.Posicion </span>@player.Nombre
+                                    <span>(@player.Numero)</span>
+                                </div>
+                            }
+                        </td>
+                        <td>
+                            @foreach (LineupPlayer player in Model.LineUps[1].Titulares)
+                            {
+                                <div class="wg_text_right">
+                                    <span>(@player.Numero)</span>
+                                    @player.Nombre
+                                    <span class="wg_bolder">@player.Posicion </span>
+
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="wg_text_center wg_header" colspan="2">SUBSTITUES</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @foreach (LineupPlayer player in Model.LineUps[0].Suplentes)
+                            {
+                                <div>
+                                    <span class="wg_bolder">@player.Posicion </span>@player.Nombre
+                                    <span>(@player.Numero)</span>
+                                </div>
+                            }
+                        </td>
+                        <td>
+                            @foreach (LineupPlayer player in Model.LineUps[1].Suplentes)
+                            {
+                                <div class="wg_text_right">
+                                    <span>(@player.Numero)</span>
+                                    @player.Nombre
+                                    <span class="wg_bolder">@player.Posicion </span>
+
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    }else
+    {
+        <div>
+            <table id="tableEventosNotStarted" class="wg-table">
+                <tbody>
+                    <tr>
+                        <td class="wg_header" colspan="2">
+
+                            <img class="wg_flag" src="@Model.partido.PaisImagen" /> @Model.partido.Pais : @Model.partido.NombreCompeticion
+                        </td>
+                        <td class="wg_header wg_text_right">@Model.partido.Ronda</td>
+                    </tr>
+                    <tr>
+                        <td class="wg_text_center wg_width_33_p wg_no_border">
+                            <br />
+                            <br />
+                            <div class="wb_img_block">
+                                <img class="wg_logo_game" src="~/images/@Model.partido.LogoLocal" />
+                            </div>
+                        </td>
+                        <td class="wg_text_center wg_width_33_p wg_no_border">
+                            <br />
+                            @Model.partido.FechaInicio
+                            <br />
+                            <br />
+                            <span class="wg_modal_score undefined">@Model.partido.GolesLocalFt - @Model.partido.GolesVisitanteFt</span>
+                        </td>
+                        <td class="wg_text_center wg_width_33_p wg_no_border">
+                            <br />
+                            <br />
+                            <div class="wb_img_block">
+                                <img class="wg_logo_game" src="~/images/@Model.partido.LogoVisitante" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="wg_text_center  wg_no_border wg_modal_team">
+                            @Model.partido.NombreLocal
+                        </td>
+                        <td></td>
+                        <td class="wg_text_center undefined wg_no_border wg_modal_team">
+                            @Model.partido.NombreVisitante
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="wg_text_center wg_no_border" colspan="3">
+                            <br />
+                            @estadio
+                            <b>@ciudad</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="wg_text_center wg_no_border" colspan="3">
+                            <i class="icon-svg icon-whistle">
+                                @Model.partido.Arbitro
+                            </i>
+                        </td>
+                    </tr>
+                    
+
+                </tbody>
+            </table>
+            </div>
+    }
+   
+
+       
+</div>

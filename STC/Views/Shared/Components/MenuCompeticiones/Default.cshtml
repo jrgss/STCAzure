@@ -1,0 +1,31 @@
+﻿@model List<Competicion>
+
+    <div class="dropdown">
+ <span class="btn dropdown-toggle nav-link text-dark" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" type="button">
+    Competiciones
+  </span>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        @foreach(Competicion compe in Model)
+    {
+        <li>
+                <div style="display:flex; text-align: center;height:20px">
+
+                    <div style="display:flex;flex: 0.5;justify-content: center;">
+                    <a asp-controller="Competicion" asp-action="Competicion" asp-route-idcomp="@compe.IdCompeticion" asp-route-season="2022">
+                        <img class="dropdown-item" href="#" src="~/images/flags/@compe.BanderaPais" > 
+                </a>
+            </div>
+                    <div style="display:flex;flex: 1;justify-content: center;align-content: center;flex-direction: column;text-align:left; font-size: 0.8em;">
+                             <a asp-controller="Competicion" asp-action="Competicion" asp-route-idcomp="@compe.IdCompeticion" asp-route-season="2022" style=" text-decoration: none">
+                            <span style="color:black" class="fuente">@compe.Nombre</span>
+                 </a>
+             </div>
+          
+                </div>
+         </li>
+       
+    }
+  </ul>
+</div>
+
+   

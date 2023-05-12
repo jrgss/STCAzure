@@ -1,0 +1,34 @@
+﻿@*@model List<Pais>
+@{
+    ViewData["Title"] = "Home Page";
+    List<Competicion> competiciones = ViewData["COMPES"] as List<Competicion>;
+}
+
+<div class="text-center">
+    <h1 class="display-4">BIENVENIDO A STC</h1>
+    <hr />
+    <h2>Seleccione un país</h2>
+    <h2>@ViewData["RESPUESTA"]</h2>
+    <form method="post">
+        <select name="idpais">
+            @foreach(Pais pais in Model){
+                <option value="@pais.IdPais">@pais.Nombre</option>
+            }
+        </select>
+        <button>Aceptar</button>
+    </form>
+    @if (competiciones != null)
+    {
+        <hr />
+        <h2>Seleccione una competición</h2>
+        <ul>
+            @foreach(Competicion compe in competiciones)
+            {
+
+                <a asp-controller="Competicion" asp-action="Index" asp-route-idcomp="@compe.IdCompeticion">@compe.Nombre</a>
+            }
+        </ul>
+    }
+   
+</div>
+*@

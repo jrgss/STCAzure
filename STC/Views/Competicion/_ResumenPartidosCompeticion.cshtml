@@ -1,0 +1,94 @@
+﻿@model ResumenPartidosCompeticion
+   <div class="container_partidos">
+        <div class="container_partidos_medio">
+        <h2 class="titulosInfo fuente">Último Partido</h2>
+
+            <div class="rowPrincipal">
+                <div class="columnaPrincipal">
+                <img class="imagenUltimoPartido" src="~/images/@Model.UltimoPartido.LogoLocal" />
+                </div>
+                <div class="guionPrincipal">
+                    -
+                </div>
+                <div class="columnaPrincipal">
+                <img class="imagenUltimoPartido" src="~/images/@Model.UltimoPartido.LogoVisitante" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="column">
+                <h2 style="font-size:2em;">@Model.UltimoPartido.GolesLocalFt</h2>
+                </div>
+                <div class="guion">
+                </div>
+                <div class="column">
+                <h2 style="font-size:2em;"> @Model.UltimoPartido.GolesVisitanteFt</h2>
+                </div>
+            </div>
+
+            <div class="row detallesPartido">
+                <div class="guion">
+                <h3 class="fuente">@Model.UltimoPartido.NombreVenue</h3>
+                </div>
+            </div>
+
+        <div class="row detallesPartido">
+                <div class="guion">
+                <h5 style="color:gray" class="fuente"> <i class="icon-svg icon-whistle"></i> @Model.UltimoPartido.Arbitro</h2>
+                </div>
+            </div>
+        </div>
+        <div class="container_partidos_medio">
+        <h2 class="titulosInfo fuente">Proximos Partidos</h2>
+            <div class="row">
+                <div class="column">
+                <img class="imagenProximos" src="~/images/@Model.ProximosPartidos[0].LogoLocal" />
+                </div>
+                <div class="guion">
+                    -
+                </div>
+                <div class="column">
+                <img class="imagenProximos" src="~/images/@Model.ProximosPartidos[0].LogoVisitante" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="column">
+                <h2 style="font-size:1em;" class="fuente">@Model.ProximosPartidos[0].NombreLocal</h2>
+                </div>
+                <div class="guion">
+
+                </div>
+                <div class="column">
+                <h2 style="font-size:1em;" class="fuente">@Model.ProximosPartidos[0].NombreVisitante</h2>
+                </div>
+            </div>
+            <br class="segundoSalto">
+            <div class="row proximoSegundoPartido">
+                <div class="column">
+                <img class="imagenProximos" src="~/images/@Model.ProximosPartidos[1].LogoLocal" />
+                </div>
+                <div class="guion">
+                    -
+                </div>
+                <div class="column">
+                <img class="imagenProximos" src="~/images/@Model.ProximosPartidos[1].LogoVisitante" />
+                </div>
+            </div>
+
+            <div class="row proximoSegundoPartido">
+                    <div class="column">
+                <h2 style="font-size:1em;" class="fuente">@Model.ProximosPartidos[1].NombreLocal</h2>
+                    </div>
+                    <div class="guion">
+
+                    </div>
+                    <div class="column">
+                <h2 style="font-size:1em;" class="fuente">@Model.ProximosPartidos[1].NombreVisitante</h2>
+                    </div>
+                </div>
+                <br>
+     
+
+        </div>
+    </div>
