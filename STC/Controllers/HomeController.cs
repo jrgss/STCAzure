@@ -17,7 +17,7 @@ namespace STC.Controllers
         //private IRepositoryInsertarDeApi repoApi;
         private ServiceApiSTC ApiSTC;
 
-        public HomeController(ILogger<HomeController> logger, IRepositoryInsertarDeApi repoApi,IRepositoryCompeticion repocompeticion,ServiceApiSTC apiStc)
+        public HomeController(ILogger<HomeController> logger,/* IRepositoryInsertarDeApi repoApi,*/ServiceApiSTC apiStc)
         {
             _logger = logger;
             //this.repocomp= repocompeticion;

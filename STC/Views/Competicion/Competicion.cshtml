@@ -47,7 +47,7 @@
         <tbody>
             <tr>
                 <td class="wg_header" colspan="11">
-                    <img class="wg_flag" src="~/images/comps/@Model.competicion.Logo" /> @Model.competicion.Pais: @Model.competicion.Nombre
+                    <img class="wg_flag" src="@Model.competicion.Logo" /> @Model.competicion.Pais: @Model.competicion.Nombre
                 </td>
             </tr>
             <tr>
@@ -67,7 +67,7 @@
                 <tr>
                     <td class="wg_text_center wg_bolder wg_width_20">@equipo.Posicion</td>
                     <td class="wg_nowrap">
-                        <img class="wg_logo" src="~/images/@equipo.logo">  @equipo.Nombre
+                        <img class="wg_logo" src="@equipo.logo">  @equipo.Nombre
                     </td>
                     <td class="wg_text_center wg_width_20">@equipo.PartidosJugados</td>
                     <td class="wg_text_center wg_width_20">@equipo.Victorias</td>
@@ -110,20 +110,3 @@
    
 </div>
 
-
-
-@*<div id="wg-api-football-standings"
-    data-host="v3.football.api-sports.io"
-     data-key="9dbcd3b27b1169a084ab6a480be5af6d"
-    data-league="39"
-    data-team=""
-    data-season="2021"
-    data-theme=""
-    data-show-errors="false"
-    data-show-logos="true"
-    class="wg_loader">
-</div>
-<script
-    type="module"
-    src="https://widgets.api-sports.io/2.0.3/widgets.js">
-</script>*@

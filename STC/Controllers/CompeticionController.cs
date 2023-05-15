@@ -11,7 +11,7 @@ namespace STC.Controllers
         //private IRepositoryCompeticion repocomp;
         private ServiceApiSTC ApiSTC;
         public CompeticionController(//IRepositoryComptemp repocomptemp,
-                                     IRepositoryCompeticion repocomp, ServiceApiSTC apiSTC)
+                                    ServiceApiSTC apiSTC)
         {
             //this.repocomptemp = repocomptemp;
             //this.repocomp = repocomp;
